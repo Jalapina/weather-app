@@ -1,0 +1,31 @@
+<header class="header">
+  <p (click)="getUserLocation();" class="logo">Weather Me</p>
+  <span class="clouds"></span>
+</header>
+<div class="container">
+    <div class="current-climate-info">
+        <div class=" current-weather">
+
+            <p class="city">{{weather?.city?.name}}</p>
+        
+            <p *ngIf="!currentWeather" class="howTo">Click the title to get your weather forecast.</p>
+            <p class="date" *ngIf="currentWeather?.weather">Today</p>
+            <p class="weather">{{currentWeather?.weather[0].description}}</p>
+            <p class="temp" *ngIf="currentWeather?.weather">{{currentWeather?.temp.day}} F</p>
+            <sc-skycons [weather]="currentWeather?.weather[0].main" [color]="color"></sc-skycons>
+        
+        </div>
+    </div>
+    <div class="response">
+                    
+        <div class="forecast" *ngFor="let weatherDay of weather?.list | slice:1">
+            <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+            <p class="date">{{weatherDay.dt * 1000 | date:'EEEE'}}</p>
+            <p class="weather">{{weatherDay.weather[0].main}}</p>
+            <p class="temp">{{weatherDay.temp.day}} F</p>
+            <sc-skycons [weather]="weatherDay?.weather[0].main" [color]="color"></sc-skycons>
+        </div>
+
+    </div>
+    
+</div>
